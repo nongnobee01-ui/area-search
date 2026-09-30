@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="app-version" content="2026-09-30a">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="icon" type="image/png" href="icon-192.png">
@@ -281,8 +282,16 @@ buildChips();
 if(location.hash==="#kitchen") setTab("kitchen"); else render();
 </script>
 
-<script src="water.js"></script>
-<script src="risk.js"></script>
-<script src="cctv.js"></script>
+<script src="water.js?v=20260930a"></script>
+<script src="risk.js?v=20260930a"></script>
+<script src="cctv.js?v=20260930a"></script>
+<script>
+/* เช็กเวอร์ชันใหม่ทุกครั้งที่กลับมาเปิดแอป ถ้ามีจะรีโหลดเอง */
+(function(){var m=document.querySelector('meta[name="app-version"]');if(!m)return;var V=m.content,busy=false;
+function check(){if(busy)return;busy=true;fetch('./?_='+Date.now(),{cache:'no-store'}).then(function(r){return r.text()}).then(function(t){var x=t.match(/name="app-version" content="([^"]+)"/);if(x&&x[1]!==V)location.reload();}).catch(function(){}).then(function(){busy=false});}
+document.addEventListener('visibilitychange',function(){if(!document.hidden)check()});
+window.addEventListener('pageshow',function(e){if(e.persisted)check()});
+setTimeout(check,4000);})();
+</script>
 </body>
 </html>
